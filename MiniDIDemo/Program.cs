@@ -46,7 +46,7 @@ namespace MiniDIDemo
             User.MyName("Neil");
             User.MyCarName();
 
-
+            //
             Console.WriteLine("接口调用完毕！");
             Console.ReadKey();
         }

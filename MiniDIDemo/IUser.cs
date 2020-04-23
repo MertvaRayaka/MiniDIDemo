@@ -2,7 +2,8 @@
 {
     public interface IUser
     {
-        void MyName(string name);
-        void MyCarName();
+        string Name { get; set; }
+        void MyName();
+        void MyCarName(string str);
     }
 }

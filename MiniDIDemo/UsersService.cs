@@ -5,20 +5,24 @@ namespace MiniDIDemo
     public class UsersService : IUser
     {
         public ICar _carService;
+
+        public string Name { get ; set ; }
+
         public UsersService(ICar carInterface)
         {
             _carService = carInterface;
         }
 
-        public void MyName(string name)
+
+        public void MyName()
         {
-            Console.WriteLine("我的名字是："+ name);
+            Console.WriteLine("我的名字是："+ Name);
         }
 
-        public void MyCarName()
+        public void MyCarName(string str)
         {
-            Console.WriteLine("我的汽车是：");
-            _carService.ShowName();
+            Console.Write("我的汽车是：");
+            _carService.ShowName(str);
         }
 
     }

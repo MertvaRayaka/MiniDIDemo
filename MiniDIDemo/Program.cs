@@ -1,54 +1,45 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniDIDemo
 {
-    /// <summary>
-    /// 本项目演示DI注入原理
-    /// </summary>
     class Program
     {
-        
-        //public static IUser _user; //不用di容器调用，会出现未将对象引用设置到实例的异常，容器就是为了初始化实例；
-        public static ICar _car;
-        //public Program(IUser user)
-        //{
-        //    _user = user;
-        //}
-
-        public Program(ICar car)
-        {
-            _car = car;
-        }
+        public static IServiceProvider Provider { get; set; }
+            = new ServiceCollection()
+                  .AddTransient<IUser, UsersService>()
+                  .AddSingleton<ICar, CarService>()
+                  .BuildServiceProvider();
         static void Main(string[] args)
         {
-            //1. 创建容器；
-            SampleDI container = new SampleDI();
-            //2. 注册服务；
-            container.Register<IUser, UsersService>();
-            container.Register<ICar, CarService>();
+            A a = new A(Provider.GetService<IUser>());
+            B b = new B(Provider.GetService<IUser>());
+            a.User.MyName();
+            a.User.MyCarName("BMW");
+            b.User.MyName();
+            b.User.MyCarName("Benz");
 
-            //3. 从容器中获取对象；
-
-            // 基于接口编程
-            IUser user = container.GetService<IUser>();
-            user.MyName("peter");
-            user.MyCarName();
-
-            IServiceCollection Container = new ServiceCollection();
-            Container.AddScoped<IUser,UsersService>().AddScoped<ICar,CarService>();
-            var provider = Container.BuildServiceProvider();
-            var User = provider.GetService<IUser>();
-            User.MyName("Neil");
-            User.MyCarName();
-
-            //
-            Console.WriteLine("接口调用完毕！");
             Console.ReadKey();
+        }
+    }
+
+    public class A
+    {
+        public IUser User { get; set; }
+        public A(IUser user)
+        {
+            User = user;
+            User.Name = "Neil";
+        }
+    }
+
+    public class B
+    {
+        public IUser User { get; set; }
+        public B(IUser user)
+        {
+            User = user;
+            User.Name = "Amber";
         }
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface ICar
     {
-        void ShowName();
+        void ShowName(string str);
     }
 }

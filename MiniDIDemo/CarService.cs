@@ -4,9 +4,9 @@ namespace MiniDIDemo
 {
     public class CarService : ICar
     {
-        public void ShowName()
+        public void ShowName(string str)
         {
-            Console.WriteLine("德国奥迪");
+            Console.WriteLine(str);
         }
     }
 }
